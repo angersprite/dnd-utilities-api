@@ -1,0 +1,19 @@
+{
+  "name": "goonrapi",
+  "version": "1.0.0",
+  "description": "REST API for Goonr NPC generator",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "goonr-api"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
