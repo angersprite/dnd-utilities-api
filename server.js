@@ -1,6 +1,8 @@
 import express from "express"
-import {createClient} from '@supabase/supabase-js'
+import { createClient } from '@supabase/supabase-js'
+import cors from 'cors'
 const app = express()
+app.use(cors())
 const port = 3000
 
 // move these to env
