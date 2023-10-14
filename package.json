@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "REST API for Goonr NPC generator",
   "main": "server.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
@@ -14,6 +15,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@supabase/supabase-js": "^2.38.1",
     "express": "^4.18.2"
   }
 }
