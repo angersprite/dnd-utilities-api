@@ -1,6 +1,8 @@
 import express from "express"
 import { createClient } from '@supabase/supabase-js'
 import cors from 'cors'
+import fs from 'fs'
+import path from 'path'
 const app = express()
 app.use(cors())
 const port = 3000
@@ -55,7 +57,15 @@ app.get('/races/:id', async (req, res) => {
 })
 
 app.get('/npc', (req, res) => {
-    
+    fs.readFile('./stubNPC.json', 'utf8', function(err, data) {
+        res.send(data);
+    })
+})
+
+app.post('/npc', (req, res) => {
+    fs.readFile('./stubNPC.json', 'utf8', function(err, data) {
+        res.send(data);
+    })
 })
 
 app.listen(port, () => {

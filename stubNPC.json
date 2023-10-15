@@ -1,0 +1,12 @@
+{
+    "className": "Fighter",
+    "race": "Human",
+    "firstName": "Chudd",
+    "lastName": "Gundersonn",
+    "hitPoints": 4,
+    "armorClass": 10,
+    "weapon": "Sword",
+    "weaponDamage": "1d8",
+    "toHit": 19,
+    "description": "has a gold tooth"
+}
