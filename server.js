@@ -1,18 +1,14 @@
-import express from "express"
-import { createClient } from '@supabase/supabase-js'
+import express from 'express'
 import cors from 'cors'
 import fs from 'fs'
-import path from 'path'
+import * as goonrDAO from './goonrDAO.js'
+import generateNPC from './npcGenerator.js'
+import {} from 'dotenv/config'
+
 const app = express()
 app.use(cors())
-const port = 3000
-
-// move these to env
-const supabaseProject = 'nlnfkvsjrayawvknouna'
-const supabaseUrl = 'https://nlnfkvsjrayawvknouna.supabase.co'
-const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5sbmZrdnNqcmF5YXd2a25vdW5hIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTcwNzM4MzEsImV4cCI6MjAxMjY0OTgzMX0.mZg7KIPxDqFzWKKgzWUsEseHNFXQEn8hkZqXdUd7OFU'
-const supabase = createClient(supabaseUrl, supabaseAnonKey)
-
+app.use(express.json()) 
+const port = process.env.API_PORT
 
 app.get('/numbers', (req, res) => {
     let numbers = [];
@@ -23,49 +19,33 @@ app.get('/numbers', (req, res) => {
 })
 
 app.get('/classes', async (req, res) => {
-    let { data: Class, error } = await supabase
-        .from('Class')
-        .select('*')
-    console.log(Class)
+    let Class = await goonrDAO.getClass()
     res.send(Class)
 })
 
 app.get('/classes/:id', async (req, res) => {
-    let { data: Class, error } = await supabase
-        .from('Class')
-        .select('*')
-        .filter('id', 'eq', req.params.id)
-    console.log(Class)
+    let Class = await goonrDAO.getClass(req.params.id)
     res.send(Class)
 })
 
 app.get('/races', async (req, res) => {
-    let { data: Race, error } = await supabase
-        .from('Race')
-        .select('*')
-    console.log(Race)
+    let Race = await goonrDAO.getRace()
     res.send(Race)
 })
 
 app.get('/races/:id', async (req, res) => {
-    let { data: Race, error } = await supabase
-        .from('Race')
-        .select('*')
-        .filter('id', 'eq', req.params.id)
-    console.log(Race)
+    let Race = await goonrDAO.getRace(req.params.id)
     res.send(Race)
 })
 
-app.get('/npc', (req, res) => {
-    fs.readFile('./stubNPC.json', 'utf8', function(err, data) {
-        res.send(data);
-    })
+app.get('/npc', async (req, res) => {
+    let NPC = await generateNPC(-1, -1)
+    res.send(NPC)
 })
 
-app.post('/npc', (req, res) => {
-    fs.readFile('./stubNPC.json', 'utf8', function(err, data) {
-        res.send(data);
-    })
+app.post('/npc', async (req, res) => {
+    let NPC = await generateNPC(req.body.classID, req.body.raceID)
+    res.send(NPC)
 })
 
 app.listen(port, () => {
