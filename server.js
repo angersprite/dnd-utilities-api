@@ -3,12 +3,16 @@ import cors from 'cors'
 import fs from 'fs'
 import * as goonrDAO from './goonrDAO.js'
 import generateNPC from './npcGenerator.js'
+import * as userDAO from './userDAO.js'
 import {} from 'dotenv/config'
+import morgan from 'morgan'
 
 const app = express()
 app.use(cors())
 app.use(express.json()) 
 const port = process.env.API_PORT
+
+app.use(morgan('tiny'));
 
 app.get('/numbers', (req, res) => {
     let numbers = [];
@@ -48,6 +52,31 @@ app.post('/npc', async (req, res) => {
     res.send(NPC)
 })
 
+app.post('/register', async (req, res) => {
+    let isRegistered = await userDAO.registerUser(req.body.email, req.body.userName, req.body.password)
+    res.send(isRegistered)
+})
+
+app.post('/login', async (req, res) => {
+    let isLoggedIn = await userDAO.tryLogin(req.body.userName, req.body.password)
+    res.send(isLoggedIn)
+})
+
+app.get('/getUserProfile', async (req, res) => {
+    let userProfile = await userDAO.getUserProfile(req.body.userID)
+    res.send(userProfile)
+})
+
+app.get('/resetPWEmail', async (req, res) => {
+    let emailSent = await userDAO.resetPasswordEmail(req.body.userName)
+    res.send(emailSent)
+})
+
+app.get('/updatePW', async (req, res) => {
+    let passwordUpdated = await userDAO.updatePassword(req.body.resetToken, req.body.userName, req.body.newPassword)
+    res.send(passwordUpdated)
+})
+
 app.listen(port, () => {
-    console.log(`Goonr API listening on port ${port}`)
+    console.log(`listening on port ${port}`)
 })
