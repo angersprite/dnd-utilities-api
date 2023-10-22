@@ -7,6 +7,8 @@ import * as userDAO from './userDAO.js'
 import {} from 'dotenv/config'
 import morgan from 'morgan'
 
+import { sendEmail } from './emailService.js' 
+
 const app = express()
 app.use(cors())
 app.use(express.json()) 
