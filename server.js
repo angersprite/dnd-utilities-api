@@ -59,12 +59,12 @@ app.post('/register', async (req, res) => {
     res.send(isRegistered)
 })
 
-app.post('/confirmEmail', async (req, res) => {
+/* app.post('/confirmEmail', async (req, res) => {
     let isConfirmed = await userDAO.confirmEmail(req.body.email)
 })
-
+ */
 app.post('/login', async (req, res) => {
-    let isLoggedIn = await userDAO.tryLogin(req.body.userName, req.body.password)
+    let isLoggedIn = await userDAO.login(req.body.userName, req.body.password)
     res.send(isLoggedIn)
 })
 
@@ -73,10 +73,10 @@ app.get('/getUserProfile', async (req, res) => {
     res.send(userProfile)
 })
 
-app.get('/resetPWEmail', async (req, res) => {
+/* app.get('/resetPWEmail', async (req, res) => {
     let emailSent = await userDAO.resetPasswordEmail(req.body.userName)
     res.send(emailSent)
-})
+}) */
 
 app.get('/updatePW', async (req, res) => {
     let passwordUpdated = await userDAO.updatePassword(req.body.resetToken, req.body.userName, req.body.newPassword)

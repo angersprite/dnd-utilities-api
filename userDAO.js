@@ -11,22 +11,28 @@ export async function registerUser(userName, email, password) {
         .rpc('register_user', {
             user_name: userName, email: email, hashed_password: hashedPW, 
         })
-    // send confirmation email
+        
     if (error) {
         console.log(error)
         return false
     }
     else {
-        console.log(data)
+        // send confirmation email
+        /* console.log(data)
         const mailSubject = 'RPG Utilities Registration'
         const mailBody = `To Activate your account please visit this link: https://goonr-9cn.pages.dev/confirmEmail/${confirmationToken}`
-        sendEmail(email, mailSubject, mailBody)
+        sendEmail(email, mailSubject, mailBody) */
         return true
     }
 }
 
-export async function tryLogin(userName, password) {
+export async function login(userName, password) {
     // get hashed pw from supabase
+    let { data: User, error } = await supabase
+        .from('User')
+        .select('password')
+        .eq('user_name', userName)
+    console.log(User)
     // bcrypt compare hashed pw with given password
     return true
 }
