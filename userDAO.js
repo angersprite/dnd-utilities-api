@@ -1,7 +1,7 @@
 import { createClient } from '@supabase/supabase-js'
 import {} from 'dotenv/config'
 import * as bcrypt from 'bcrypt'
-import { sendEmail } from './emailService'
+import { sendEmail } from './emailService.js'
 
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_KEY)
 
