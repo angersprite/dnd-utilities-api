@@ -64,3 +64,19 @@ export async function updatePassword(resetToken, newPassword) {
     // query supabase password update for username
     return true
 }
+
+export async function emailExists(email) {
+    const { data, error } = await supabase
+        .from('User')
+        .select('email')
+        .eq('email', email)
+    return (data.length > 0)
+}
+
+export async function userNameExists(userName) {
+    const { data, error } = await supabase
+        .from('User')
+        .select('user_name')
+        .eq('user_name', userName)
+    return (data.length > 0)
+}

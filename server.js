@@ -16,14 +16,6 @@ const port = process.env.API_PORT
 
 app.use(morgan('tiny'));
 
-app.get('/numbers', (req, res) => {
-    let numbers = [];
-    for (let i = 0; i < 10; i++) {
-        numbers.push(Math.round(Math.random()* 100))
-    }
-    res.send(numbers)
-})
-
 app.get('/classes', async (req, res) => {
     let Class = await goonrDAO.getClass()
     res.send(Class)
@@ -57,6 +49,16 @@ app.post('/npc', async (req, res) => {
 app.post('/register', async (req, res) => {
     let isRegistered = await userDAO.registerUser(req.body.userName, req.body.email, req.body.password)
     res.send(isRegistered)
+})
+
+app.get('/emailExists/:email', async (req, res) => {
+    let emailExists = await userDAO.emailExists(req.params.email)
+    res.send(emailExists)
+})
+
+app.get('/userNameExists/:userName', async (req, res) => {
+    let userNameExists = await userDAO.userNameExists(req.params.userName)
+    res.send(userNameExists) 
 })
 
 /* app.post('/confirmEmail', async (req, res) => {
