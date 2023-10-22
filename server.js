@@ -57,6 +57,10 @@ app.post('/register', async (req, res) => {
     res.send(isRegistered)
 })
 
+app.post('/confirmEmail', async (req, res) => {
+    let isConfirmed = await userDAO.confirmEmail(req.body.email)
+})
+
 app.post('/login', async (req, res) => {
     let isLoggedIn = await userDAO.tryLogin(req.body.userName, req.body.password)
     res.send(isLoggedIn)
