@@ -1,18 +1,20 @@
 import { createClient } from '@supabase/supabase-js'
 import {} from 'dotenv/config'
 import * as bcrypt from 'bcrypt'
+import * as nodemailer from 'nodemailer'
 
 // replace with secure key
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_KEY)
 
 export async function registerUser(email, userName, password) {
     let hashedPW = await bcrypt.hash(password, 10)
-    /* const { data, error } = await supabase
+    const { data, error } = await supabase
         .rpc('register_user', {
             email, hashedPW, userName
-        }) */
+        })
+    // send confirmation email
 
-    return hashedPW
+    return true
 }
 
 export async function tryLogin(userName, password) {
