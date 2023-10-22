@@ -28,13 +28,17 @@ export async function registerUser(userName, email, password) {
 
 export async function login(userName, password) {
     // get hashed pw from supabase
-    let { data: User, error } = await supabase
+    let { data, error } = await supabase
         .from('User')
         .select('password')
         .eq('user_name', userName)
-    console.log(User)
-    // bcrypt compare hashed pw with given password
-    return true
+    if (error || data.length != 1) {
+        return false
+    } else {
+        const hashedPW = data[0].password
+        const result = await bcrypt.compare(password, hashedPW)
+        return result
+    }
 }
 
 export async function getUserProfile(userID) {
