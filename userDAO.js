@@ -6,15 +6,15 @@ import * as nodemailer from 'nodemailer'
 // replace with secure key
 const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_KEY)
 
-export async function registerUser(email, userName, password) {
+export async function registerUser(userName, email, password) {
     let hashedPW = await bcrypt.hash(password, 10)
     const { data, error } = await supabase
         .rpc('register_user', {
-            email, hashedPW, userName
+            user_name: userName, email: email, hashed_password: hashedPW, 
         })
     // send confirmation email
 
-    return true
+    return (error == null)
 }
 
 export async function tryLogin(userName, password) {

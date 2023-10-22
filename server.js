@@ -53,7 +53,7 @@ app.post('/npc', async (req, res) => {
 })
 
 app.post('/register', async (req, res) => {
-    let isRegistered = await userDAO.registerUser(req.body.email, req.body.userName, req.body.password)
+    let isRegistered = await userDAO.registerUser(req.body.userName, req.body.email, req.body.password)
     res.send(isRegistered)
 })
 
