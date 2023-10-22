@@ -37,6 +37,7 @@ export async function login(userName, password) {
     } else {
         const hashedPW = data[0].password
         const result = await bcrypt.compare(password, hashedPW)
+        console.log(result)
         return result
     }
 }
